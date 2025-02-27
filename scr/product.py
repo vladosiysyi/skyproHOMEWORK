@@ -10,6 +10,12 @@ class Product:
         self._price = price  # Приватный атрибут для цены
         self.quantity = quantity
 
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт"
+
+    def __add__(self, other):
+        return (self.price * self.quantity) + (other.price * other.quantity)
+
     @property
     def price(self):
         """Геттер для цены."""

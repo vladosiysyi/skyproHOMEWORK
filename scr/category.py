@@ -15,6 +15,11 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)  # Используем self.__products вместо products
 
+    def __str__(self):
+        """Возвращает строку с информацией о категории и общем количестве товаров."""
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {len(self.__products)} шт., общее количество товаров на складе: {total_quantity} шт."
+
     def add_product(self, product):
         """добавление продукта в категорию"""
         self.__products.append(product)
