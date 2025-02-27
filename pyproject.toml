@@ -20,6 +20,7 @@ build-backend = "poetry.core.masonry.api"
 flake8 = "^7.1.1"
 pytest = "^8.3.4"
 pytest-cov = "^6.0.0"
+autopep8 = "^2.3.2"
 
 
 [tool.poetry.group.lint.dependencies]
