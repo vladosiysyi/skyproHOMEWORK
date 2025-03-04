@@ -1,3 +1,4 @@
+from scr.product import Product
 class Category:
     name: str
     description: str
@@ -21,9 +22,10 @@ class Category:
         return f"{self.name}, количество продуктов: {len(self.__products)} шт., общее количество товаров на складе: {total_quantity} шт."
 
     def add_product(self, product):
-        """добавление продукта в категорию"""
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять только объекты класса Product или его наследников")
         self.__products.append(product)
-        Category.category_count += 1
+        Category.product_count += 1
 
     @property
     def products(self):

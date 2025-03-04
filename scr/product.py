@@ -14,6 +14,8 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт"
 
     def __add__(self, other):
+        if type(self) is not type(other):
+            raise TypeError("Сложение возможно только для товаров одного типа")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
     @property
@@ -55,3 +57,34 @@ class Product:
         new_product = cls(name, description, price, quantity)
         product_list.append(new_product)  # Добавляем новый продукт в список
         return new_product
+
+
+class Smartphone(Product):
+    def __init__(self, name, description, price, quantity, model, efficiency, memory, color):
+        super().__init__(name, description, price, quantity)
+        self.model = model
+        self.efficiency = efficiency
+        self.memory = memory
+        self.color = color
+
+    def __str__(self):
+        return (f"{self.name} ({self.model}), {self.price} руб. Остаток: {self.quantity} шт.\n"
+                f"Производительность: {self.efficiency}, Память: {self.memory}GB, Цвет: {self.color}")
+
+
+class LawnGrass(Product):
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+    def __str__(self):
+        return (f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
+                f"Страна производства: {self.country}, Срок прорастания: {self.germination_period} дней, Цвет: {self.color}")
+
+phone = Smartphone("iPhone", "Смартфон Apple", 100000, 5, "14 Pro", "Высокая", 256, "Черный")
+grass = LawnGrass("Green Grass", "Газонная трава", 500, 20, "Голландия", 14, "Зеленый")
+
+prod = Product("Chair", "Comfortable", 100, 2)
+print(type(prod))
