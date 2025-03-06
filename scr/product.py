@@ -1,14 +1,48 @@
-class Product:
-    name: str
-    description: str
-    quantity: int
-    _price: float
+from abc import ABC, abstractmethod
 
+
+class BaseProduct(ABC):
+    @abstractmethod
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
         self._price = price  # Приватный атрибут для цены
         self.quantity = quantity
+
+    @property
+    @abstractmethod
+    def price(self):
+        """Геттер для цены."""
+        pass
+
+    @price.setter
+    @abstractmethod
+    def price(self, new_price):
+        """Сеттер для цены с проверкой на отрицательное значение."""
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        """Метод для строкового представления продукта."""
+        pass
+
+    @abstractmethod
+    def __add__(self, other):
+        """Метод для сложения продуктов."""
+        pass
+
+
+class ClassinfoMixin:
+    def __init__(self):
+        print(repr(self))
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price},{self.quantity})"
+
+
+class Product(BaseProduct):
+    def __init__(self, name, description, price, quantity):
+        super().__init__(name, description, price, quantity)
 
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт"
@@ -20,12 +54,10 @@ class Product:
 
     @property
     def price(self):
-        """Геттер для цены."""
         return self._price
 
     @price.setter
     def price(self, new_price):
-        """Сеттер для цены с проверкой на отрицательное значение."""
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
         else:
@@ -59,7 +91,7 @@ class Product:
         return new_product
 
 
-class Smartphone(Product):
+class Smartphone(Product, ClassinfoMixin):
     def __init__(self, name, description, price, quantity, model, efficiency, memory, color):
         super().__init__(name, description, price, quantity)
         self.model = model
@@ -72,7 +104,7 @@ class Smartphone(Product):
                 f"Производительность: {self.efficiency}, Память: {self.memory}GB, Цвет: {self.color}")
 
 
-class LawnGrass(Product):
+class LawnGrass(Product, ClassinfoMixin):
     def __init__(self, name, description, price, quantity, country, germination_period, color):
         super().__init__(name, description, price, quantity)
         self.country = country
@@ -80,11 +112,28 @@ class LawnGrass(Product):
         self.color = color
 
     def __str__(self):
-        return (f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
-                f"Страна производства: {self.country}, Срок прорастания: {self.germination_period} дней, Цвет: {self.color}")
+        return (
+            f"{
+                self.name}, {
+                self.price} руб. Остаток: {
+                self.quantity} шт.\n" f"Страна производства: {
+                    self.country}, Срок прорастания: {
+                        self.germination_period} дней, Цвет: {
+                            self.color}")
+
 
 phone = Smartphone("iPhone", "Смартфон Apple", 100000, 5, "14 Pro", "Высокая", 256, "Черный")
 grass = LawnGrass("Green Grass", "Газонная трава", 500, 20, "Голландия", 14, "Зеленый")
 
 prod = Product("Chair", "Comfortable", 100, 2)
+
 print(type(prod))
+# Создаем экземпляр Smartphone
+phone = Smartphone("iPhone", "Apple smartphone", 100000, 5, "14 Pro", "High", 256, "Black")
+
+# Создаем экземпляр LawnGrass
+grass = LawnGrass("Green Grass", "Газонная трава", 500, 20, "Голландия", 14, "Зеленый")
+
+# Проверяем вывод repr
+print(repr(phone))  # Это вызовет __repr__ и выведет информацию о смартфоне
+print(repr(grass))  # Это вызовет __repr__ и выведет информацию о газонной траве

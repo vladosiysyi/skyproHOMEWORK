@@ -1,4 +1,6 @@
 from scr.product import Product
+
+
 class Category:
     name: str
     description: str
@@ -19,7 +21,10 @@ class Category:
     def __str__(self):
         """Возвращает строку с информацией о категории и общем количестве товаров."""
         total_quantity = sum(product.quantity for product in self.__products)
-        return f"{self.name}, количество продуктов: {len(self.__products)} шт., общее количество товаров на складе: {total_quantity} шт."
+        return f"{
+            self.name}, количество продуктов: {
+            len(
+                self.__products)} шт., общее количество товаров на складе: {total_quantity} шт."
 
     def add_product(self, product):
         if not isinstance(product, Product):

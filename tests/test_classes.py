@@ -79,7 +79,6 @@ def test_product_addition():
         phone + grass
 
 
-
 def test_new_product_creation():
     product_list = []
     product_info = {"name": "Mouse", "description": "Wireless mouse", "price": 50, "quantity": 20}
@@ -96,12 +95,11 @@ def test_new_product_update():
     assert updated_product.price == 90
 
 
-
-
 def test_product_price_validation():
     product = Product("Speaker", "Bluetooth speaker", 150, 6)
     product.price = -50  # Попытка установить отрицательную цену
     assert product.price == 150  # Цена не изменилась
+
 
 def test_smartphone_str():
     smartphone = Smartphone(
@@ -119,6 +117,8 @@ def test_smartphone_str():
         "Производительность: High, Память: 256GB, Цвет: Black"
     )
     assert str(smartphone) == expected_str
+
+
 def test_lawn_grass_str():
     lawn_grass = LawnGrass(
         name="Green Grass",
@@ -134,3 +134,10 @@ def test_lawn_grass_str():
         "Страна производства: Голландия, Срок прорастания: 14 дней, Цвет: Зеленый"
     )
     assert str(lawn_grass) == expected_str
+
+
+def test_classinfo_repr():
+    phone = Smartphone("iPhone", "Apple smartphone", 100000, 5, "14 Pro", "High", 256, "Black")
+    grass = LawnGrass("Green Grass", "Газонная трава", 500, 20, "Голландия", 14, "Зеленый")
+    assert repr(phone) == "Smartphone(iPhone, Apple smartphone, 100000,5)"
+    assert repr(grass) == "LawnGrass(Green Grass, Газонная трава, 500,20)"
