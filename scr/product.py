@@ -42,6 +42,8 @@ class ClassinfoMixin:
 
 class Product(BaseProduct):
     def __init__(self, name, description, price, quantity):
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__(name, description, price, quantity)
 
     def __str__(self):
@@ -93,6 +95,8 @@ class Product(BaseProduct):
 
 class Smartphone(Product, ClassinfoMixin):
     def __init__(self, name, description, price, quantity, model, efficiency, memory, color):
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__(name, description, price, quantity)
         self.model = model
         self.efficiency = efficiency
@@ -106,6 +110,8 @@ class Smartphone(Product, ClassinfoMixin):
 
 class LawnGrass(Product, ClassinfoMixin):
     def __init__(self, name, description, price, quantity, country, germination_period, color):
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period

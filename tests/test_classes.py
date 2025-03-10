@@ -141,3 +141,30 @@ def test_classinfo_repr():
     grass = LawnGrass("Green Grass", "Газонная трава", 500, 20, "Голландия", 14, "Зеленый")
     assert repr(phone) == "Smartphone(iPhone, Apple smartphone, 100000,5)"
     assert repr(grass) == "LawnGrass(Green Grass, Газонная трава, 500,20)"
+
+
+def test_create_product_with_zero_quantity():
+    """Тест: создание товара с нулевым количеством должно вызвать ValueError."""
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Test Product", "Some description", 100, 0)
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Smartphone("iPhone", "Apple smartphone", 100000, 0, "14 Pro", "High", 256, "Black")
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        LawnGrass("Green Grass", "Газонная трава", 500, 0, "Голландия", 14, "Зеленый")
+
+
+def test_middle_price_with_products():
+    """Тест: расчет средней цены товаров, если в категории есть товары."""
+    product1 = Product("iPhone", "Смартфон", 100000, 5)
+    product2 = Product("MacBook", "Ноутбук", 150000, 2)
+
+    category = Category("Электроника", "Гаджеты", [product1, product2])
+
+    expected_avg_price = (100000 + 150000) / 2  # Среднее арифметическое
+    assert category.middle_price() == expected_avg_price
+
+
+def test_middle_price_no_products():
+    """Тест: средняя цена в пустой категории должна быть 0 (деление на ноль не должно происходить)."""
+    category = Category("Одежда", "Категория без товаров")
+    assert category.middle_price() == 0

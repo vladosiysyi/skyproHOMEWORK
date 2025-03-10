@@ -26,6 +26,15 @@ class Category:
             len(
                 self.__products)} шт., общее количество товаров на складе: {total_quantity} шт."
 
+    def middle_price(self):
+        """Возвращает среднюю цену товаров в категории."""
+        try:
+            total_price = sum(product.price for product in self.__products)
+            total_products = len(self.__products)
+            return total_price / total_products
+        except ZeroDivisionError:
+            return 0  # Если в категории нет товаров, возвращаем 0
+
     def add_product(self, product):
         if not isinstance(product, Product):
             raise TypeError("Можно добавлять только объекты класса Product или его наследников")
